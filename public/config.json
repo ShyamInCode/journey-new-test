@@ -14,8 +14,52 @@
     },
     "arguments": {
         "execute": {
-            "inArguments": [],
-            "outArguments": [],
+            "inArguments": [
+                {
+                    "endpoint": {
+                        "dataType": "String",
+                        "isNullable": false,
+                        "direction": "in"
+                    },
+                    "headers": {
+                        "dataType": "Object",
+                        "isNullable": true,
+                        "direction": "in"
+                    },
+                    "body": {
+                        "dataType": "Object",
+                        "isNullable": true,
+                        "direction": "in"
+                    },
+                    "emailAddress": {
+                        "dataType": "String",
+                        "isNullable": false,
+                        "direction": "in",
+                        "access": "visible",
+                        "value": "{{Contact.Default.Email}}"
+                    },
+                    "contactKey": {
+                        "dataType": "String",
+                        "isNullable": false,
+                        "direction": "in",
+                        "value": "{{Contact.Key}}"
+                    }
+                }
+            ],
+            "outArguments": [
+                {
+                    "status": {
+                        "dataType": "Text",
+                        "direction": "out",
+                        "access": "visible"
+                    },
+                    "response": {
+                        "dataType": "Text",
+                        "direction": "out",
+                        "access": "visible"
+                    }
+                }
+            ],
             "url": "https://journey-new-test.onrender.com/journey/execute",
             "verb": "POST",
             "body": "",
@@ -48,6 +92,58 @@
             "height": 400,
             "width": 600,
             "fullscreen": false
+        }
+    },
+    "schema": {
+        "arguments": {
+            "execute": {
+                "inArguments": [
+                    {
+                        "endpoint": {
+                            "dataType": "String",
+                            "isNullable": false,
+                            "direction": "in"
+                        },
+                        "headers": {
+                            "dataType": "Object",
+                            "isNullable": true,
+                            "direction": "in"
+                        },
+                        "body": {
+                            "dataType": "Object",
+                            "isNullable": true,
+                            "direction": "in"
+                        },
+                        "emailAddress": {
+                            "dataType": "String",
+                            "isNullable": false,
+                            "direction": "in",
+                            "access": "visible",
+                            "value": "{{Contact.Default.Email}}"
+                        },
+                        "contactKey": {
+                            "dataType": "String",
+                            "isNullable": false,
+                            "direction": "in",
+                            "value": "{{Contact.Key}}"
+                        }
+                    }
+                ],
+                "outArguments": [
+                    {
+                        "status": {
+                            "dataType": "Text",
+                            "direction": "out",
+                            "access": "visible"
+                        },
+                        "response": {
+                            "dataType": "Text",
+                            "direction": "out",
+                            "access": "visible"
+                        }
+                    }
+                ]
+            }
         }
     }
 } 
