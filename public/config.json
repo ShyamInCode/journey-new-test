@@ -1,0 +1,53 @@
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+        "icon": "images/icon.png",
+        "iconSmall": "images/iconSmall.png",
+        "category": "custom"
+    },
+    "type": "REST",
+    "lang": {
+        "en-US": {
+            "name": "Custom API Activity",
+            "description": "Send customer data to external API endpoint"
+        }
+    },
+    "arguments": {
+        "execute": {
+            "inArguments": [],
+            "outArguments": [],
+            "url": "https://your-domain/journey/execute",
+            "verb": "POST",
+            "body": "",
+            "header": "",
+            "format": "json",
+            "useJwt": true,
+            "timeout": 10000
+        }
+    },
+    "configurationArguments": {
+        "save": {
+            "url": "https://your-domain/journey/save",
+            "verb": "POST"
+        },
+        "publish": {
+            "url": "https://your-domain/journey/publish",
+            "verb": "POST"
+        },
+        "validate": {
+            "url": "https://your-domain/journey/validate",
+            "verb": "POST"
+        },
+        "stop": {
+            "url": "https://your-domain/journey/stop",
+            "verb": "POST"
+        }
+    },
+    "userInterfaces": {
+        "configModal": {
+            "height": 400,
+            "width": 600,
+            "fullscreen": false
+        }
+    }
+} 
