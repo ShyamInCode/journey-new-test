@@ -16,7 +16,7 @@
         "execute": {
             "inArguments": [],
             "outArguments": [],
-            "url": "https://your-domain/journey/execute",
+            "url": "https://journey-new-test.onrender.com/journey/execute",
             "verb": "POST",
             "body": "",
             "header": "",
@@ -27,19 +27,19 @@
     },
     "configurationArguments": {
         "save": {
-            "url": "https://your-domain/journey/save",
+            "url": "https://journey-new-test.onrender.com/journey/save",
             "verb": "POST"
         },
         "publish": {
-            "url": "https://your-domain/journey/publish",
+            "url": "https://journey-new-test.onrender.com/journey/publish",
             "verb": "POST"
         },
         "validate": {
-            "url": "https://your-domain/journey/validate",
+            "url": "https://journey-new-test.onrender.com/journey/validate",
             "verb": "POST"
         },
         "stop": {
-            "url": "https://your-domain/journey/stop",
+            "url": "https://journey-new-test.onrender.com/journey/stop",
             "verb": "POST"
         }
     },
