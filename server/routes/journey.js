@@ -9,8 +9,8 @@ router.post('/execute', async (req, res) => {
         const inArguments = req.body.inArguments[0];
         
         const payload = {
-            email: inArguments.emailField,
-            name: inArguments.nameField,
+            email: inArguments.email,
+            name: inArguments.name,
             contactKey: inArguments.contactKey
         };
 
