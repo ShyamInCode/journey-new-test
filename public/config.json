@@ -3,7 +3,8 @@
     "metaData": {
         "icon": "images/icon.png",
         "iconSmall": "images/iconSmall.png",
-        "category": "custom"
+        "category": "custom",
+        "isConfigured": true
     },
     "type": "REST",
     "lang": {
@@ -14,7 +15,11 @@
     },
     "arguments": {
         "execute": {
-            "inArguments": [],
+            "inArguments": [{
+                "email": "{{Contact.Attribute.manihas_custom_activity.Email}}",
+                "name": "{{Contact.Attribute.manihas_custom_activity.Name}}",
+                "contactKey": "{{Contact.Key}}"
+            }],
             "outArguments": [],
             "url": "https://journey-new-test.onrender.com/journey/execute",
             "verb": "POST",
@@ -37,13 +42,25 @@
         "validate": {
             "url": "https://journey-new-test.onrender.com/journey/validate",
             "verb": "POST"
+        },
+        "stop": {
+            "url": "https://journey-new-test.onrender.com/journey/stop",
+            "verb": "POST"
         }
     },
     "userInterfaces": {
         "configModal": {
-            "height": 400,
-            "width": 600,
+            "height": 200,
+            "width": 300,
             "fullscreen": false
+        }
+    },
+    "schema": {
+        "arguments": {
+            "execute": {
+                "inArguments": [],
+                "outArguments": []
+            }
         }
     }
 } 

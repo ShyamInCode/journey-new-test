@@ -11,15 +11,22 @@ function initialize(data) {
     if (data) {
         payload = data;
     }
+    
+    // Set the activity as configured immediately
+    payload['metaData'].isConfigured = true;
+    connection.trigger('updateActivity', payload);
 }
 
 function save() {
+    // Pre-configure the payload with default values
     payload['arguments'].execute.inArguments = [{
-        "email": "{{Contact.Attribute.manihas_custom_activity.Email}}",  // Replace 'Journey_DE' with your Data Extension name
-        "name": "{{Contact.Attribute.manihas_custom_activity.Name}}",    // Replace 'Journey_DE' with your Data Extension name
+        "email": "{{Contact.Attribute.manihas_custom_activity.Email}}",
+        "name": "{{Contact.Attribute.manihas_custom_activity.Name}}",
         "contactKey": "{{Contact.Key}}"
     }];
 
     payload['metaData'].isConfigured = true;
+
+    console.log('Saving payload:', payload);
     connection.trigger('updateActivity', payload);
 } 

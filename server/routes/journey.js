@@ -22,7 +22,7 @@ router.post('/execute', async (req, res) => {
         });
     } catch (error) {
         console.error('Error executing journey:', error);
-        res.status(500).json({
+        res.status(200).json({
             status: 'error',
             error: error.message
         });
@@ -30,15 +30,36 @@ router.post('/execute', async (req, res) => {
 });
 
 router.post('/save', (req, res) => {
-    res.status(200).json({ status: 'success' });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            isConfigured: true
+        }
+    });
 });
 
 router.post('/publish', (req, res) => {
-    res.status(200).json({ status: 'success' });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            isConfigured: true
+        }
+    });
 });
 
 router.post('/validate', (req, res) => {
-    res.status(200).json({ status: 'success' });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            isConfigured: true
+        }
+    });
+});
+
+router.post('/stop', (req, res) => {
+    res.status(200).json({
+        status: 'success'
+    });
 });
 
 module.exports = router; 
