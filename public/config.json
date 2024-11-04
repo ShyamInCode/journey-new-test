@@ -1,0 +1,49 @@
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+        "icon": "images/icon.png",
+        "iconSmall": "images/iconSmall.png",
+        "category": "custom"
+    },
+    "type": "REST",
+    "lang": {
+        "en-US": {
+            "name": "Customer Data Transmitter",
+            "description": "Sends customer data to external endpoint"
+        }
+    },
+    "arguments": {
+        "execute": {
+            "inArguments": [],
+            "outArguments": [],
+            "url": "https://journey-new-test.onrender.com/journey/execute",
+            "verb": "POST",
+            "body": "",
+            "header": "",
+            "format": "json",
+            "useJwt": false,
+            "timeout": 10000
+        }
+    },
+    "configurationArguments": {
+        "save": {
+            "url": "https://journey-new-test.onrender.com/journey/save",
+            "verb": "POST"
+        },
+        "publish": {
+            "url": "https://journey-new-test.onrender.com/journey/publish",
+            "verb": "POST"
+        },
+        "validate": {
+            "url": "https://journey-new-test.onrender.com/journey/validate",
+            "verb": "POST"
+        }
+    },
+    "userInterfaces": {
+        "configModal": {
+            "height": 400,
+            "width": 600,
+            "fullscreen": false
+        }
+    }
+} 

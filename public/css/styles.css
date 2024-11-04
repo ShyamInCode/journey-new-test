@@ -1,0 +1,20 @@
+.step {
+    padding: 20px;
+}
+
+.slds-form-element {
+    margin-bottom: 1rem;
+}
+
+.slds-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+}
+
+.slds-form-element__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+} 
