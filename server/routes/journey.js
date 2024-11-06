@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-const EXTERNAL_ENDPOINT = 'https://journey-new-test.onrender.com/journeys/test/post';
+const EXTERNAL_ENDPOINT = 'https://6728fd8f6d5fa4901b6bc529.mockapi.io/journeys/test/post';
 
 router.post('/execute', async (req, res) => {
     try {
@@ -10,7 +10,7 @@ router.post('/execute', async (req, res) => {
         
         const payload = {
             email: inArguments.email,
-            name: inArguments.name,
+            name: "Shyam Ram",
             contactKey: inArguments.contactKey
         };
 
