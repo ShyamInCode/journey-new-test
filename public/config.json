@@ -15,11 +15,11 @@
     },
     "arguments": {
         "execute": {
-            "inArguments": [{
-                "emailAddress": "{{Contact.Attribute.CustomerData.EmailAddress}}",
-                "name": "{{Contact.Attribute.CustomerData.Name}}",
-                "contactKey": "{{Contact.Key}}"
-            }],
+            "inArguments": [
+                {
+                    "allFields": "{{Contact.Attribute.CustomerData}}"
+                }
+            ],
             "outArguments": [],
             "url": "https://journey-new-test.onrender.com/journey/execute",
             "verb": "POST",
@@ -58,25 +58,17 @@
     "schema": {
         "arguments": {
             "execute": {
-                "inArguments": [{
-                    "emailAddress": {
-                        "dataType": "Email",
-                        "isNullable": false,
-                        "direction": "in"
-                    },
-                    "name": {
-                        "dataType": "Text",
-                        "isNullable": false,
-                        "direction": "in"
-                    },
-                    "contactKey": {
-                        "dataType": "Text",
-                        "isNullable": false,
-                        "direction": "in"
+                "inArguments": [
+                    {
+                        "allFields": {
+                            "dataType": "Object",
+                            "isNullable": false,
+                            "direction": "in"
+                        }
                     }
-                }],
+                ],
                 "outArguments": []
             }
         }
     }
-} 
+}
