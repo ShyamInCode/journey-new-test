@@ -1,59 +1,76 @@
-$(document).ready(function() {
+// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+    // First check if Postmonger is available
     if (typeof Postmonger === 'undefined') {
-        console.error('Postmonger not loaded');
+        console.error('Postmonger is not loaded');
         return;
     }
 
-    var connection = new Postmonger.Session();
+    // Initialize Postmonger Session with proper target
+    var connection = new Postmonger.Session({
+        // This tells Postmonger where to send messages
+        // For Journey Builder, we use the parent window
+        win: window.parent,
+        // Optional: Define allowed methods
+        methods: ['ready', 'initActivity', 'updateActivity']
+    });
+
     var payload = {};
-    
-    const DE_EXTERNAL_KEY = '1DE7605E-9CB3-4087-ABF6-AF29A5B68D8C';
+    var eventDefinitionKey;
 
-    connection.on('initActivity', initialize);
-    connection.on('clickedNext', onClickedNext);
+    // Test connection
+    console.log('Postmonger Connection:', connection);
 
-    function onRender() {
-        connection.trigger('ready');
-    }
-
-    function initialize(data) {
-        console.log('Initializing with data:', data);
+    // Setup the connection events
+    connection.on('initActivity', function(data) {
+        console.log('Initialize Activity:', data);
         if (data) {
             payload = data;
         }
 
-        connection.trigger('requestSchema');
-        connection.on('requestedSchema', function(data) {
-            console.log('Received schema:', data);
-            
-            payload['arguments'].execute.inArguments = [{
-                "deFields": `{{Contact.Attribute.${DE_EXTERNAL_KEY}.*}}`
-            }];
+        if (!payload.arguments) {
+            payload.arguments = {};
+        }
+        if (!payload.arguments.execute) {
+            payload.arguments.execute = {};
+        }
 
-            console.log('Updated payload:', payload);
-        });
+        // Request event definition key and schema
+        connection.send('requestEventDefinitionKey');
+        connection.send('requestSchema');
+    });
 
-        connection.trigger('updateButton', {
-            button: 'next',
-            text: 'done',
-            visible: true
-        });
-    }
-
-    function onClickedNext() {
-        save();
-    }
-
-    function save() {
-        payload['arguments'].execute.inArguments = [{
-            "deFields": `{{Contact.Attribute.${DE_EXTERNAL_KEY}.*}}`
+    connection.on('requestedSchema', function(data) {
+        console.log('Received Schema:', data);
+        
+        payload.arguments.execute.inArguments = [{
+            sourceData: '{{Event.DEAudience-' + eventDefinitionKey + '}}'
         }];
 
-        payload['metaData'].isConfigured = true;
+        console.log('Updated Payload:', payload);
+    });
 
+    connection.on('requestedEventDefinitionKey', function(data) {
+        console.log('Received EventDefinitionKey:', data);
+        eventDefinitionKey = data.eventDefinitionKey;
+    });
+
+    connection.on('clickedNext', function() {
+        save();
+    });
+
+    // Define save function
+    function save() {
+        if (!payload.metaData) {
+            payload.metaData = {};
+        }
+        payload.metaData.isConfigured = true;
+        
         console.log('Saving payload:', payload);
-        connection.trigger('updateActivity', payload);
+        connection.send('updateActivity', payload);
     }
 
-    onRender();
+    // Send ready event
+    console.log('Sending ready event');
+    connection.send('ready');
 }); 
