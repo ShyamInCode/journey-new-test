@@ -18,7 +18,7 @@ router.post('/execute', async (req, res) => {
         console.log('Received payload:', payload);
 
         // Make your API call with the payload
-        const response = await axios.post(YOUR_API_ENDPOINT, payload);
+        const response = await axios.post(EXTERNAL_ENDPOINT, payload);
 
         res.status(200).json({
             status: 'ok',
