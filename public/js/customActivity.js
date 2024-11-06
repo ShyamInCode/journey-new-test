@@ -1,58 +1,97 @@
-var connection = new Postmonger.Session();
-var payload = {};
-
-$(window).ready(onRender);
-
-connection.on('initActivity', initialize);
-connection.on('clickedNext', save);
-
-function onRender() {
-    // Notify Journey Builder that this activity is ready
-    connection.trigger('ready');
-}
-
-function initialize(data) {
-    if (data) {
-        payload = data;
+// Wait for DOM and Postmonger to be ready
+$(document).ready(function() {
+    // Ensure Postmonger is loaded
+    if (typeof Postmonger === 'undefined') {
+        console.error('Postmonger not loaded');
+        return;
     }
 
-    // Request the Entry Source schema
-    connection.trigger('requestSchema');
-    connection.on('requestedSchema', function (data) {
-        // Add entry source attributes as inArgs
-        const schema = data['schema'];
+    // Initialize the connection
+    var connection = new Postmonger.Session();
+    var payload = {};
+    var steps = [
+        { "label": "Step 1", "key": "step1" }
+    ];
+    var currentStep = steps[0].key;
 
-        if (!payload['arguments']) {
-            payload['arguments'] = {};
+    // Setup the connection events
+    connection.on('initActivity', initialize);
+    connection.on('requestedTokens', onGetTokens);
+    connection.on('requestedEndpoints', onGetEndpoints);
+    connection.on('clickedNext', onClickedNext);
+    connection.on('clickedBack', onClickedBack);
+    connection.on('gotoStep', onGotoStep);
+
+    function onRender() {
+        // JB will respond the first time 'ready' is called with 'initActivity'
+        connection.trigger('ready');
+        connection.trigger('requestTokens');
+        connection.trigger('requestEndpoints');
+    }
+
+    function initialize(data) {
+        if (data) {
+            payload = data;
         }
 
-        if (!payload['arguments'].execute) {
-            payload['arguments'].execute = {};
-        }
+        var hasInArguments = Boolean(
+            payload['arguments'] &&
+            payload['arguments'].execute &&
+            payload['arguments'].execute.inArguments &&
+            payload['arguments'].execute.inArguments.length > 0
+        );
 
-        if (!payload['arguments'].execute.inArguments) {
-            payload['arguments'].execute.inArguments = [];
-        }
+        var inArguments = hasInArguments ? payload['arguments'].execute.inArguments : {};
 
-        // Add default inArguments
+        $.each(inArguments, function(index, inArgument) {
+            $.each(inArgument, function(key, val) {
+                if (key === 'name') {
+                    $('#name').val(val);
+                }
+            });
+        });
+
+        connection.trigger('updateButton', {
+            button: 'next',
+            text: 'done',
+            visible: true
+        });
+    }
+
+    function onGetTokens(tokens) {
+        console.log('tokens', tokens);
+    }
+
+    function onGetEndpoints(endpoints) {
+        console.log('endpoints', endpoints);
+    }
+
+    function onClickedNext() {
+        save();
+    }
+
+    function onClickedBack() {
+        connection.trigger('prevStep');
+    }
+
+    function onGotoStep(step) {
+        currentStep = step.key;
+    }
+
+    function save() {
+        var name = $('#name').val();
+
         payload['arguments'].execute.inArguments = [{
             "email": "{{Contact.Attribute.manihas_custom_activity.Email}}",
             "name": "{{Contact.Attribute.manihas_custom_activity.Name}}",
             "contactKey": "{{Contact.Key}}"
         }];
 
-        // Add schema fields as inArguments
-        for (var i = 0, l = schema.length; i < l; i++) {
-            var inArg = {};
-            let attr = schema[i].key;
-            let keyIndex = attr.lastIndexOf('.') + 1;
-            inArg[attr.substring(keyIndex)] = '{{' + attr + '}}';
-            payload['arguments'].execute.inArguments.push(inArg);
-        }
-    });
-}
+        payload['metaData'].isConfigured = true;
 
-function save() {
-    payload['metaData'].isConfigured = true;
-    connection.trigger('updateActivity', payload);
-} 
+        connection.trigger('updateActivity', payload);
+    }
+
+    // Start the app
+    onRender();
+}); 
