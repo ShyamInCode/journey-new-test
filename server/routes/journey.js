@@ -8,22 +8,22 @@ router.post('/execute', async (req, res) => {
     try {
         const inArguments = req.body.inArguments[0];
         
-        const payload = {
-            emailAddress: inArguments.emailAddress,
-            name: inArguments.name,
-            test: "Shyam Ram",
-            contactKey: inArguments.contactKey
-        };
+        const payload = {};
+        
+        req.body.inArguments.forEach(arg => {
+            Object.assign(payload, arg);
+        });
+
+        payload.testField = "shyamm-ram-test";
 
         const response = await axios.post(EXTERNAL_ENDPOINT, payload);
         
         res.status(200).json({
-            status: 'success',
-            response: response.data
+            status: 'ok',
+            payload: payload
         });
     } catch (error) {
-        console.error('Error executing journey:', error);
-        res.status(200).json({
+        res.status(500).json({
             status: 'error',
             error: error.message
         });

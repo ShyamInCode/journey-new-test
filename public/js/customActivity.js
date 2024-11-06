@@ -51,6 +51,22 @@ $(document).ready(function() {
             });
         });
 
+        connection.trigger('requestSchema');
+        connection.on('requestedSchema', function(data) {
+            payload['arguments'].execute.inArguments = [];
+            const schema = data['schema'];
+            for (var i = 0, l = schema.length; i < l; i++) {
+                var inArg = {};
+                let attr = schema[i].key;
+                let keyIndex = attr.lastIndexOf('.') + 1;
+                inArg[attr.substring(keyIndex)] = '{{' + attr + '}}';
+                payload['arguments'].execute.inArguments.push(inArg);
+            }
+            payload['arguments'].execute.inArguments.push({
+                "testField": "shyamm-ram-test"
+            });
+        });
+
         connection.trigger('updateButton', {
             button: 'next',
             text: 'done',
