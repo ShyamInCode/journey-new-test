@@ -16,8 +16,8 @@
     "arguments": {
         "execute": {
             "inArguments": [{
-                "email": "{{Contact.Attribute.manihas_custom_activity.Email}}",
-                "name": "{{Contact.Attribute.manihas_custom_activity.Name}}",
+                "emailAddress": "{{Contact.Attribute.CustomerData.EmailAddress}}",
+                "name": "{{Contact.Attribute.CustomerData.Name}}",
                 "contactKey": "{{Contact.Key}}"
             }],
             "outArguments": [],
@@ -58,7 +58,23 @@
     "schema": {
         "arguments": {
             "execute": {
-                "inArguments": [],
+                "inArguments": [{
+                    "emailAddress": {
+                        "dataType": "Email",
+                        "isNullable": false,
+                        "direction": "in"
+                    },
+                    "name": {
+                        "dataType": "Text",
+                        "isNullable": false,
+                        "direction": "in"
+                    },
+                    "contactKey": {
+                        "dataType": "Text",
+                        "isNullable": false,
+                        "direction": "in"
+                    }
+                }],
                 "outArguments": []
             }
         }
