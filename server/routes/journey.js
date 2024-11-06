@@ -7,22 +7,25 @@ const EXTERNAL_ENDPOINT = 'https://6728fd8f6d5fa4901b6bc529.mockapi.io/journeys/
 router.post('/execute', async (req, res) => {
     try {
         const inArguments = req.body.inArguments[0];
+        const allFields = inArguments.allFields;
         
-        const payload = {};
-        
-        req.body.inArguments.forEach(arg => {
-            Object.assign(payload, arg);
-        });
+        // Create payload with all fields and add test field
+        const payload = {
+            ...allFields,  // This spreads all DE fields
+            testField: "ram-test"
+        };
 
-        payload.testField = "shyamm-ram-test";
+        console.log('Received payload:', payload);
 
-        const response = await axios.post(EXTERNAL_ENDPOINT, payload);
-        
+        // Make your API call with the payload
+        const response = await axios.post(YOUR_API_ENDPOINT, payload);
+
         res.status(200).json({
             status: 'ok',
             payload: payload
         });
     } catch (error) {
+        console.error('Execute Error:', error);
         res.status(500).json({
             status: 'error',
             error: error.message

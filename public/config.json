@@ -17,7 +17,7 @@
         "execute": {
             "inArguments": [
                 {
-                    "allFields": "{{Contact.Attribute.CustomerData}}"
+                    "allFields": "{{Contact.Attribute.1DE7605E-9CB3-4087-ABF6-AF29A5B68D8C.*}}"
                 }
             ],
             "outArguments": [],
@@ -62,8 +62,9 @@
                     {
                         "allFields": {
                             "dataType": "Object",
-                            "isNullable": false,
-                            "direction": "in"
+                            "isNullable": true,
+                            "direction": "in",
+                            "access": "readonly"
                         }
                     }
                 ],
